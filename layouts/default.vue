@@ -25,10 +25,34 @@
   </header>
   <main>
     <slot name="default" />
+    <div class="description" v-if="route.path !== '/joinWe' && route.path !== 'writeAReview'">
+      <div class="content">
+        <p>
+          {{data.info.capitalizeTheDescription}}}
+        </p>
+        <span>
+        {{data.info.lowercaseDescription}}}
+      </span>
+        <nuxt-link to="/joinWe">联系我们</nuxt-link>
+      </div>
+    </div>
   </main>
   <footer>
-    尾部内容
-    {{scrollTop}}
+    <div class="links">
+      <ul>
+        <li
+        v-for="item of data.links"
+        :key="item.id"
+        >
+          <NuxtLink :to="item.link" target="_blank">
+            {{item.title}}
+          </NuxtLink>
+        </li>
+      </ul>
+    </div>
+    <div class="icpNumber">
+      {{data.info.icp}}
+    </div>
   </footer>
   <!--超过200px增加返回顶部-->
   <NBackTop :show="scrollTop > 200" :right="50" :bottom="50">
@@ -42,6 +66,18 @@ import {useRoute} from "#app"
 import { NBackTop } from 'naive-ui'
 import useScroll from '../utils/useScroll.js'
 const route = useRoute()
+const { data } = useAsyncData(async () => {
+  const links = await $fetch('/api/footer/links', {
+    method: 'GET'
+  })
+  const info = await $fetch('/api/footer/info', {
+    method: 'GET'
+  })
+  return {
+    links,
+    info
+  }
+})
 const tabsList = [
   {
     label: '首页',
@@ -120,6 +156,77 @@ header {
           }
         }
       }
+    }
+  }
+}
+footer {
+  background-color: #D9D9D9;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  >.links {
+    >ul {
+      display: flex;
+      list-style: none;
+      margin-bottom: 20px;
+      >li {
+        >a {
+          text-decoration: none;
+          color: #000;
+          font-size: 14px;
+          transition-duration: 100ms;
+          &:hover {
+            color: var(--hl-home-tab-h-c);
+          }
+        }
+      }
+    }
+  }
+  >.icpNumber {
+    color: #000;
+    font-size: 14px;
+  }
+}
+.description {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 673px;
+  background-image: url('../assets/images/indexDescription.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  >.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 1066px;
+    >p {
+      font-size: 24px;
+      font-weight: 900;
+      margin-top: 20px;
+      font-style: italic;
+      text-align: center;
+    }
+    >span {
+      font-size: 16px;
+      margin-top: 20px;
+    }
+    >a {
+      width: 164px;
+      height: 44px;
+      display: flex;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: #fff;
+      border-radius: 4px;
+      margin-top: 20px;
+      text-decoration: none;
+      background-color: var(--hl-home-tab-h-c);
     }
   }
 }

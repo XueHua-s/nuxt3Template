@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   },
   build: {
     transpile:
-      process.env.NODE_ENV === 'production'
+      process.env['NODE_ENV'] === 'production'
         ? [
           '@nuxtjs/eslint-module',
           'naive-ui',
@@ -22,10 +22,12 @@ export default defineNuxtConfig({
     '~/assets/css/common.css',
     '~/assets/css/color.css'
   ],
-  // 导出客户端环境变量
   runtimeConfig: {
+    // 外层服务端允许访问
+    serverUrl: process.env.NUXT_PUBLIC_API_BASE_URL_PRO_SERVE,
+    // 客户端允许访问的
     public: {
-      apiBase: process.env.NODE_ENV === 'development' ? process.env.NUXT_PUBLIC_API_BASE_URL_DEV : process.env.NUXT_PUBLIC_API_BASE_URL_PRO
+      apiBase: process.env.NUXT_PUBLIC_API_BASE_URL_PRO
     }
   },
   vite: {

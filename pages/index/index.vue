@@ -293,9 +293,9 @@ const getNextNoteIndex = (index) => {
                 width: 6px;
                 background-color: var(--hl-home-tab-h-c);
                 position: absolute;
-                right: -104px;
+                right: -107px;
                 top: 50%;
-                transform: translateY(-50%);
+                transform: translateY(-50%) translateX(-50%);
                 border-radius: 12px;
               }
             }

@@ -3,11 +3,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev && npm run lint",
+    "build": "nuxt build --dotenv .env.production",
+    "dev": "nuxt dev --dotenv .env.develop && npm run lint",
     "lint": "eslint --ext .ts,.js,.vue .",
     "generate": "nuxt generate",
-    "preview": "nuxt preview --port 9899",
+    "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
